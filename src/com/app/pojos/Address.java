@@ -1,7 +1,7 @@
 package com.app.pojos;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
 
 @Entity
 @Table(name="address")

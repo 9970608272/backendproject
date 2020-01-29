@@ -8,4 +8,5 @@ public interface IUserDao {
 
 	List<User> getAllUsers();
 	Object validateUser(User u);
+	void deleteUserById(int u);
 }

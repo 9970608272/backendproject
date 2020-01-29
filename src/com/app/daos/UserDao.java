@@ -48,4 +48,12 @@ public class UserDao implements IUserDao {
 		}
 		return null;
 	}
+
+	@Override
+	public void deleteUserById(int u) {
+		
+		System.out.println("in dao"+u);
+		User user=sf.getCurrentSession().get(User.class, u);
+		sf.getCurrentSession().delete(user);	
+	}
 }

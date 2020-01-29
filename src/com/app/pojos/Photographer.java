@@ -23,7 +23,10 @@ public class Photographer {
 	
 	private Address address;
 	
-	private Gallary gallary;
+	
+	private List<Image> images = new ArrayList<>();
+	
+	//private Gallary gallary;
 	private User user;
 
 	
@@ -101,17 +104,26 @@ public class Photographer {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-     
+    
 	@JsonIgnore
-	@OneToOne(mappedBy = "photographer",cascade=CascadeType.ALL,orphanRemoval=true)
-	public Gallary getGallary() {
-		return gallary;
+	@OneToMany(mappedBy = "photographer",cascade=CascadeType.ALL,orphanRemoval=true)
+	public List<Image> getImages() {
+		return images;
 	}
 
-	public void setGallary(Gallary gallary) {
-		this.gallary = gallary;
-	}
 	
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+
+	/*
+	 * @OneToOne(mappedBy =
+	 * "photographer",cascade=CascadeType.ALL,orphanRemoval=true,fetch =
+	 * FetchType.EAGER) public Gallary getGallary() { return gallary; }
+	 * 
+	 * public void setGallary(Gallary gallary) { this.gallary = gallary; }
+	 */	
 	@OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	@JsonIgnore

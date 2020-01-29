@@ -2,13 +2,15 @@ package com.app.daos;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.pojos.Address;
-
+import com.app.pojos.Image;
 import com.app.pojos.Photographer;
 import com.app.pojos.Role;
 import com.app.pojos.User;
@@ -30,8 +32,11 @@ public class PhotographerDao implements IPhotographerDao {
 		User u = new User(p.getEmail(), p.getPassword(), Role.PHOTOGRAPHER);
 		sf.getCurrentSession().save(u);
 		p.setUser(u);
+	
 		p.setRole(Role.PHOTOGRAPHER);
+		
 		sf.getCurrentSession().persist(p);
+			
 		return p;
 	}
 
@@ -85,4 +90,45 @@ public class PhotographerDao implements IPhotographerDao {
 		sf.getCurrentSession().update(p);
 	}
 
+	@Override
+	public String addImage(Image image, Integer pid) {
+		
+		System.out.println("jjjjjjjjjjjjjjj");
+		
+		try {
+			
+		System.out.println("llllllllllllllllllll");	
+			
+			Session session = sf.getCurrentSession();
+	
+			Photographer ph = session.get(Photographer.class, pid);
+				
+			
+			ph.getImages().add(image);
+			
+			image.setPhotographer(ph);
+		
+			session.update(ph);
+			
+		} catch (HibernateException e) {
+			System.out.println("222222222222");
+			e.printStackTrace();
+		}
+		return "1111";
+	}
+
+	@Override
+	public List<Image> getImagesByph(Integer i) {
+		
+		Session session = sf.getCurrentSession();
+		
+		Photographer ph = session.get(Photographer.class, i);
+		
+		
+		System.out.println(ph.getImages().size());
+		
+		ph.getImages();
+		
+		return ph.getImages();
+	}
 }

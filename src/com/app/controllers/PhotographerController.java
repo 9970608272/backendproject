@@ -1,5 +1,6 @@
 package com.app.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.daos.IPhotographerDao;
 import com.app.pojos.Address;
+import com.app.pojos.Image;
 import com.app.pojos.Photographer;
 
 @RestController
@@ -30,6 +33,13 @@ public class PhotographerController {
 		return new ResponseEntity<Photographer>(dao1.addPhotographer(p), HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/getImagesByph")
+	ResponseEntity<?> getImagesByph(@RequestBody String pid) {
+		Integer i = Integer.parseInt(pid);
+		System.out.println("pid :" + pid);
+		return new ResponseEntity<List<Image>>(dao1.getImagesByph(i), HttpStatus.CREATED);
+	}
+
 	
 	@GetMapping("/getphotographerById/{pid}")
 	ResponseEntity<?> getPhotographerById(@PathVariable String pid) {
@@ -93,4 +103,30 @@ public class PhotographerController {
 		dao1.removePhotographerAddress(pid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-}
+	
+	
+	@PostMapping("/addimage/{pid}")
+	public ResponseEntity<?>addimage(@PathVariable String pid,
+							@RequestParam(value ="image",required = false) MultipartFile image)
+	{
+		try 
+		{
+			Image img=new Image();
+			
+			img.setImage(image.getBytes());
+			
+			dao1.addImage(img, Integer.parseInt(pid));
+			
+			return new ResponseEntity<String>("added succefully", HttpStatus.CREATED);
+
+		} 
+		catch (IOException e)
+		{
+			e.printStackTrace();
+
+			return new ResponseEntity<String>("adding fail", HttpStatus.CREATED);
+
+		}			
+	}
+	}
+

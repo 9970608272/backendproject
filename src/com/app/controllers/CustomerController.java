@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.daos.ICustomerDao;
 import com.app.pojos.Address;
 import com.app.pojos.Customer;
-import com.app.pojos.Photographer;
+
 
 @RestController
 @CrossOrigin

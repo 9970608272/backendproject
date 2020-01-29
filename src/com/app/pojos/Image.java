@@ -10,7 +10,9 @@ public class Image {
 	private byte[] image;
 	private FunctionType ftype;
 	
-	private Gallary gallary;
+	//private Gallary gallary;
+	
+	private Photographer photographer;
 
 	private Booking booking;
 	
@@ -54,16 +56,17 @@ public class Image {
 		this.ftype = ftype;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name="gallary_id")
-	public Gallary getGallary() {
-		return gallary;
-	}
-
-	public void setGallary(Gallary gallary) {
-		this.gallary = gallary;
-	}
-
+	
+	
+	
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name="gallary_id") public Gallary getGallary() { return gallary;
+	 * }
+	 * 
+	 * public void setGallary(Gallary gallary) { this.gallary = gallary; }
+	 */
 	@Override
 	public String toString() {
 		return "Image [imageId=" + id + ", ftype=" + ftype + "]";
@@ -77,6 +80,16 @@ public class Image {
 
 	public void setBooking(Booking booking) {
 		this.booking = booking;
+	}
+
+	@ManyToOne
+	@JoinColumn(name="ph_id")
+	public Photographer getPhotographer() {
+		return photographer;
+	}
+
+	public void setPhotographer(Photographer photographer) {
+		this.photographer = photographer;
 	}
 	
 	

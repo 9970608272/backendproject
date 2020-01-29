@@ -1,11 +1,14 @@
 package com.app.pojos;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -14,6 +17,7 @@ public class Booking {
 
 	private Integer id;
 	private Plan plan;
+	private Date date;
 	private String time;
 	private Customer customer;
 
@@ -55,7 +59,16 @@ public class Booking {
 		this.plan = plan;
 	}
 
-	@Column(length = 50)
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd",timezone="IST")
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public String getTime() {
 		return time;
 	}
@@ -97,9 +110,7 @@ public class Booking {
 	@Override
 	public String toString() {
 		return "Booking [id=" + id + ", plan=" + plan + ", time=" + time + ", customer=" + customer + ", photographer="
-				+ photographer + "]";
+				+ photographer + ", images=" + images + "]";
 	}
-	
-	
 
 }
